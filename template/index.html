@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoffeRapid - Seu Café Expresso</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">CoffeRapid</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#pedidos">Pedidos</a></li>
+                <li><a href="#acompanhamento">Acompanhe Seu Pedido</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Bem-vindo ao CoffeRapid</h1>
+            <p>Experimente o melhor café da cidade!</p>
+        </section>
+
+        <section id="sobre">
+            <h2>Sobre Nós</h2>
+            <p>Somos apaixonados por café e queremos compartilhar essa paixão com você.</p>
+        </section>
+
+        <section id="menu">
+            <h2>Nosso Menu</h2>
+            <ul>
+                {% for product in products %}
+                    <li>{{ product.name }} - R$ {{ product.value }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section id="pedidos">
+            <h2>Faça seu Pedido</h2>
+            <form id="pedido-form" method="POST" action="{{ url_for('create_order_page') }}">
+                <label for="cafe">Escolha seu café:</label>
+                <select id="cafe" name="product_id" required>
+                    <option value="">Selecione...</option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}">{{ product.name }} - R$ {{ product.value }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="acucar">Açúcar:</label>
+                <input type="checkbox" id="acucar" name="suggar">
+
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="client_name" required>
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="client_email" required>
+
+                <button type="submit">Fazer Pedido</button>
+            </form>
+        </section>
+
+        <section id="acompanhamento">
+            <h2>Acompanhe Seu Pedido</h2>
+            <div id="status-pedido">
+                <p>{{ order_status }}</p>
+            </div>
+        </section>
+
+        <section id="contato">
+            <h2>Entre em Contato</h2>
+            <p>Email: contato@cofferappid.com</p>
+            <p>Telefone: (11) 1234-5678</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CoffeRapid. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
